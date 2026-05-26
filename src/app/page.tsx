@@ -3,14 +3,11 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="relative flex min-h-screen flex-col overflow-hidden">
-      {/* Background image */}
-      <div className="absolute inset-0 bg-[#0a1d08]">
-        <img
-          src="/images/hero-bg.jpg"
-          alt=""
-          className="h-full w-full object-cover outline outline-1 -outline-offset-1 outline-black/10 dark:outline-white/10"
-        />
-      </div>
+      {/* Background image — CSS background-image, no JS hydration needed */}
+      <div
+        className="absolute inset-0 bg-[#576a78] bg-cover bg-center"
+        style={{ backgroundImage: "url(/images/hero-bg.jpg)" }}
+      />
 
       {/* Subtle bottom gradient for text readability */}
       <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#0a1d08]/80 via-[#0a1d08]/20 to-transparent" />

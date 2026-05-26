@@ -11,6 +11,9 @@ const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 export const metadata: Metadata = {
   title: "850 English OS",
   description: "Learn more with fewer words.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
@@ -20,6 +23,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={cn("font-sans", geist.variable)}>
+      <head>
+        <link rel="preload" href="/images/hero-bg.jpg" as="image" />
+      </head>
       <body>
         <div className="flex min-h-screen flex-col">
           <HideOnHome><Header /></HideOnHome>
