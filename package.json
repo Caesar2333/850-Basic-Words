@@ -8,21 +8,28 @@
     "typecheck": "tsc --noEmit",
     "data:build": "node scripts/build-basic-850.mjs",
     "data:validate": "node scripts/validate-data.mjs",
-    "pages:check": "node scripts/check-pages.mjs"
+    "pages:check": "node scripts/check-pages.mjs",
+    "build:patterns": "node scripts/build-patterns.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",
     "@tailwindcss/postcss": "^4.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "framer-motion": "^12.40.0",
     "lucide-react": "^1.16.0",
     "next": "^16.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "retext": "^9.0.0",
+    "retext-english": "^5.0.0",
+    "retext-simplify": "^8.0.0",
+    "retext-stringify": "^4.0.0",
     "shadcn": "^4.8.0",
     "tailwind-merge": "^3.6.0",
     "tailwindcss": "^4.0.0",
-    "tw-animate-css": "^1.4.0"
+    "tw-animate-css": "^1.4.0",
+    "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

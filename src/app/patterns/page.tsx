@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import patterns from "@/data/patterns.json";
 import type { PatternEntry } from "@/types/content";
 
@@ -27,8 +28,8 @@ export default function PatternsPage() {
   return (
     <main className="bg-canvas-ice">
       <section className="px-6 py-16 sm:px-10">
-        <div className="mx-auto grid max-w-[1360px] gap-8 lg:grid-cols-[1fr_320px] lg:items-end">
-          <div className="max-w-3xl">
+        <div className="mx-auto grid max-w-[1360px] gap-8 lg:grid-cols-[1fr_280px] lg:items-start">
+          <div className="max-w-4xl">
             <p className="font-fragmentmono text-xs font-bold uppercase text-valley-green">
               Power Patterns
             </p>
@@ -62,7 +63,7 @@ export default function PatternsPage() {
                 type="button"
                 onClick={() => setSelectedWord(entry.word)}
                 className={[
-                  "inline-flex min-w-max rounded-[20px] border px-5 py-2 text-sm font-bold uppercase transition-colors",
+                  "inline-flex min-w-max rounded-[20px] border px-5 py-3 text-sm font-bold uppercase transition-[background-color,border-color,color,transform] active:scale-[0.96]",
                   active
                     ? "border-valley-green bg-valley-green text-canvas-ice"
                     : "border-stone-moss bg-canvas-ice text-adaline-ink hover:border-valley-green",
@@ -77,26 +78,36 @@ export default function PatternsPage() {
 
       <section className="border-b border-stone-moss px-6 py-12 sm:px-10">
         <div className="mx-auto max-w-[1360px]">
-          <h2 className="text-7xl font-bold uppercase leading-none text-adaline-ink max-sm:text-6xl">
-            {selectedEntry.word}
-          </h2>
-          <p className="mt-5 text-lg leading-[1.43] text-adaline-ink/75">
-            {selectedEntry.coreMeaning}
-          </p>
-          <p className="mt-2 text-base leading-[1.43] text-adaline-ink/60">
-            {selectedEntry.zh}
-          </p>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={selectedEntry.word}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8, transition: { duration: 0.12 } }}
+              transition={{ duration: 0.2, ease: [0.2, 0, 0, 1] }}
+            >
+              <h2 className="text-7xl font-bold uppercase leading-none text-adaline-ink max-sm:text-6xl">
+                {selectedEntry.word}
+              </h2>
+              <p className="mt-5 text-lg leading-[1.43] text-adaline-ink/75 text-pretty">
+                {selectedEntry.coreMeaning}
+              </p>
+              <p className="mt-2 text-base leading-[1.43] text-adaline-ink/60 text-pretty">
+                {selectedEntry.zh}
+              </p>
 
-          <div className="mt-6 flex flex-wrap gap-2">
-            {selectedEntry.examples.map((example) => (
-              <span
-                key={example}
-                className="rounded-[8px] bg-forest-dew/35 px-4 py-2 text-sm leading-5 text-adaline-ink"
-              >
-                {example}
-              </span>
-            ))}
-          </div>
+              <div className="mt-6 flex flex-wrap gap-2">
+                {selectedEntry.examples.map((example) => (
+                  <span
+                    key={example}
+                    className="rounded-[8px] bg-forest-dew/35 px-4 py-2 text-sm leading-5 text-adaline-ink"
+                  >
+                    {example}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </section>
 
@@ -105,44 +116,58 @@ export default function PatternsPage() {
           <p className="font-fragmentmono text-xs font-bold uppercase text-valley-green">
             Patterns
           </p>
-          <h2 className="mt-3 text-[22px] font-bold text-adaline-ink">
-            {selectedEntry.word} &times; particles &mdash; common combinations
-          </h2>
 
-          <div className="mt-6 grid gap-5 lg:grid-cols-3">
-            {selectedEntry.patterns.map((pattern) => (
-              <article
-                key={pattern.phrase}
-                className="flex flex-col gap-3 rounded-lg border border-mist-gray bg-canvas-ice p-5"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <h3 className="text-2xl font-bold text-adaline-ink">{pattern.phrase}</h3>
-                  <span className="mt-1 rounded-[20px] bg-forest-dew px-3 py-1 text-xs text-valley-green">
-                    {getBadgeLabel(pattern.phrase)}
-                  </span>
-                </div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={selectedEntry.word}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8, transition: { duration: 0.12 } }}
+              transition={{ duration: 0.2, ease: [0.2, 0, 0, 1] }}
+            >
+              <h2 className="mt-3 text-[22px] font-bold text-adaline-ink">
+                {selectedEntry.word} &times; particles &mdash; common combinations
+              </h2>
 
-                <p className="text-sm text-adaline-ink/75">
-                  {pattern.zh}
-                </p>
+              <div className="mt-6 grid gap-5 lg:grid-cols-3">
+                {selectedEntry.patterns.map((pattern) => (
+                  <motion.article
+                    key={pattern.phrase}
+                    className="flex flex-col gap-3 rounded-lg border border-mist-gray bg-canvas-ice p-5"
+                    whileHover={{ y: -4 }}
+                    whileTap={{ scale: 0.96 }}
+                    transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <h3 className="text-2xl font-bold text-adaline-ink">{pattern.phrase}</h3>
+                      <span className="mt-1 rounded-[20px] bg-forest-dew px-3 py-1 text-xs text-valley-green">
+                        {getBadgeLabel(pattern.phrase)}
+                      </span>
+                    </div>
 
-                <div className="rounded-[4px] border-l-[3px] border-valley-green bg-forest-dew/30 px-4 py-3 text-sm leading-[1.43] text-adaline-ink">
-                  {pattern.examples[0]}
-                </div>
+                    <p className="text-sm text-adaline-ink/75 text-pretty">
+                      {pattern.zh}
+                    </p>
 
-                <p className="text-xs text-adaline-ink/40">
-                  {pattern.collocation}
-                </p>
+                    <div className="rounded-[4px] border-l-[3px] border-valley-green bg-forest-dew/30 px-4 py-3 text-sm leading-[1.43] text-adaline-ink">
+                      {pattern.examples[0]}
+                    </div>
 
-                {pattern.antonym ? (
-                  <div className="flex items-center gap-1.5 text-xs text-adaline-ink/60">
-                    <span className="text-valley-green">&ang;</span>
-                    <span>{pattern.antonym}</span>
-                  </div>
-                ) : null}
-              </article>
-            ))}
-          </div>
+                    <p className="text-xs text-adaline-ink/40">
+                      {pattern.collocation}
+                    </p>
+
+                    {pattern.antonym ? (
+                      <div className="flex items-center gap-1.5 text-xs text-adaline-ink/60">
+                        <span className="text-valley-green">&ang;</span>
+                        <span>{pattern.antonym}</span>
+                      </div>
+                    ) : null}
+                  </motion.article>
+                ))}
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </section>
 
@@ -151,24 +176,35 @@ export default function PatternsPage() {
           <p className="font-fragmentmono text-xs font-bold uppercase text-valley-green">
             Simple replacements
           </p>
-          <h2 className="mt-3 text-[22px] font-bold text-adaline-ink">
-            Advanced words &rarr; simple words with {selectedEntry.word}
-          </h2>
 
-          <div className="mt-6 grid gap-3 md:grid-cols-3">
-            {selectedEntry.advancedReplacements.map((replacement) => (
-              <div
-                key={`${replacement.advanced}-${replacement.simple}`}
-                className="flex items-center gap-3 rounded-lg border border-stone-moss bg-canvas-ice px-5 py-4 text-sm"
-              >
-                <span className="flex-1 text-adaline-ink/60">{replacement.advanced}</span>
-                <span className="rounded-[20px] bg-valley-green px-2.5 py-1 text-xs font-bold text-canvas-ice">
-                  &rarr;
-                </span>
-                <span className="flex-1 font-bold text-adaline-ink">{replacement.simple}</span>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={selectedEntry.word}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8, transition: { duration: 0.12 } }}
+              transition={{ duration: 0.2, ease: [0.2, 0, 0, 1] }}
+            >
+              <h2 className="mt-3 text-[22px] font-bold text-adaline-ink">
+                Advanced words &rarr; simple words with {selectedEntry.word}
+              </h2>
+
+              <div className="mt-6 grid gap-3 md:grid-cols-3">
+                {selectedEntry.advancedReplacements.map((replacement) => (
+                  <div
+                    key={`${replacement.advanced}-${replacement.simple}`}
+                    className="flex items-center gap-3 rounded-lg border border-stone-moss bg-canvas-ice px-5 py-4 text-sm"
+                  >
+                    <span className="flex-1 text-adaline-ink/60">{replacement.advanced}</span>
+                    <span className="rounded-[20px] bg-valley-green px-2.5 py-1 text-xs font-bold text-canvas-ice">
+                      &rarr;
+                    </span>
+                    <span className="flex-1 font-bold text-adaline-ink">{replacement.simple}</span>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </section>
     </main>

@@ -3,14 +3,15 @@ import Link from "next/link";
 const footerLinks = [
   { href: "/", label: "About" },
   { href: "/words", label: "Words" },
+  { href: "/daily", label: "Daily" },
   { href: "/patterns", label: "Patterns" },
   { href: "/simplify", label: "Rewrite" },
 ];
 
 export function Footer() {
   return (
-    <footer className="border-t border-stone-moss bg-canvas-ice">
-      <div className="mx-auto grid max-w-6xl gap-8 px-6 py-10 sm:px-10 md:grid-cols-[1fr_auto] md:items-end">
+    <footer className="border-t border-stone-moss bg-canvas-ice px-8 sm:px-16">
+      <div className="mx-auto grid max-w-[1360px] gap-8 py-10 md:grid-cols-[1fr_auto] md:items-end">
         <div className="max-w-xl">
           <p className="text-base font-bold text-adaline-ink">850 English OS</p>
           <p className="mt-3 text-sm leading-6 text-adaline-ink/70">

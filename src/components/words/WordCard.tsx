@@ -1,4 +1,5 @@
 import { BookOpen, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 import type { BasicWord, WordCategory } from "@/types/content";
 
 type WordCardProps = {
@@ -12,9 +13,12 @@ export function WordCard({ word, category }: WordCardProps) {
   const collocationTranslations = word.patternZh?.slice(0, 3) ?? [];
 
   return (
-    <article
+    <motion.article
       data-word-card="true"
       className="flex min-h-[239px] flex-col gap-3 rounded-lg border border-mist-gray bg-canvas-ice p-6"
+      whileHover={{ y: -4 }}
+      whileTap={{ scale: 0.96 }}
+      transition={{ type: "spring", duration: 0.3, bounce: 0 }}
     >
       <div className="flex items-start justify-between gap-3">
         <h3 className="text-[30px] font-bold leading-none text-adaline-ink">
@@ -61,6 +65,6 @@ export function WordCard({ word, category }: WordCardProps) {
           </div>
         </>
       )}
-    </article>
+    </motion.article>
   );
 }

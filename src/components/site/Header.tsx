@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const navItems = [
-  { href: "/", label: "Home" },
   { href: "/words", label: "Words" },
   { href: "/daily", label: "Daily" },
   { href: "/patterns", label: "Patterns" },
@@ -23,11 +22,11 @@ export function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 h-14 border-b border-stone-moss bg-canvas-ice px-6 sm:px-10">
-      <div className="mx-auto flex h-full max-w-6xl flex-row items-center justify-between">
+    <header className="sticky top-0 z-50 h-14 border-b border-stone-moss bg-canvas-ice px-8 sm:px-16">
+      <div className="mx-auto flex h-full max-w-[1360px] flex-row items-center justify-between">
         <Link
           href="/"
-          className="inline-flex w-fit items-center rounded-[20px] text-lg font-bold text-adaline-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-valley-green"
+          className="inline-flex w-fit shrink-0 items-center rounded-[20px] py-1 text-lg font-bold tracking-tight text-adaline-ink transition-colors hover:text-valley-green focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-valley-green"
         >
           850 English OS
         </Link>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import basicWords from "@/data/basic-850.json";
 import categories from "@/data/categories.json";
 import { WordCard } from "@/components/words/WordCard";
@@ -75,10 +76,32 @@ export default function WordsPage() {
   const hasMore = visibleCount < filteredWords.length;
   const filtersActive = query || categoryFilter !== "all" || letterFilter !== "all" || sortMode !== "az";
 
+  const sectionStagger = {
+    initial: {},
+    animate: { transition: { staggerChildren: 0.08 } },
+  };
+  const sectionFadeUp = {
+    initial: { opacity: 0, y: 16 },
+    animate: { opacity: 1, y: 0, transition: { duration: 0.3, ease: [0.2, 0, 0, 1] as const } },
+  };
+  const cardGridStagger = {
+    initial: {},
+    animate: { transition: { staggerChildren: 0.03 } },
+  };
+  const cardFadeUp = {
+    initial: { opacity: 0, y: 12 },
+    animate: { opacity: 1, y: 0, transition: { duration: 0.3, ease: [0.2, 0, 0, 1] as const } },
+  };
+
   return (
     <main className="bg-canvas-ice">
+      <motion.div
+        variants={sectionStagger}
+        initial="initial"
+        animate="animate"
+      >
       {/* HERO */}
-      <section className="px-6 py-12 sm:px-10 lg:py-16">
+      <motion.section variants={sectionFadeUp} className="px-6 py-12 sm:px-10 lg:py-16">
         <div className="mx-auto grid max-w-[1360px] gap-8 lg:grid-cols-[1fr_480px] lg:items-end">
           <div>
             <p className="font-fragmentmono text-xs font-bold uppercase tracking-normal text-valley-green">
@@ -87,7 +110,7 @@ export default function WordsPage() {
             <h1 className="mt-5 text-balance text-[53px] font-bold leading-[1.05] text-adaline-ink max-sm:text-5xl">
               850 Basic Words
             </h1>
-            <p className="mt-5 max-w-2xl text-lg leading-[1.43] text-adaline-ink/75">
+            <p className="mt-5 max-w-2xl text-pretty text-lg leading-[1.43] text-adaline-ink/75">
               The core words for building simple English expression.
             </p>
           </div>
@@ -108,10 +131,10 @@ export default function WordsPage() {
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* FILTER BAR */}
-      <section className="border-y border-stone-moss bg-canvas-ice px-6 py-8 sm:px-10">
+      <motion.section variants={sectionFadeUp} className="border-y border-stone-moss bg-canvas-ice px-6 py-8 sm:px-10">
         <div className="mx-auto flex max-w-[1360px] flex-col gap-4">
           {/* Row 1: Search + Sort */}
           <div className="flex items-center gap-4">
@@ -147,7 +170,7 @@ export default function WordsPage() {
               type="button"
               onClick={() => updateCategory("all")}
               className={[
-                "inline-flex min-w-max items-center gap-2 rounded-[20px] border px-5 py-2 text-sm transition-colors",
+                "inline-flex min-w-max items-center gap-2 rounded-[20px] border px-5 py-2 text-sm transition-colors active:scale-[0.96]",
                 categoryFilter === "all"
                   ? "border-valley-green bg-valley-green text-canvas-ice"
                   : "border-stone-moss bg-canvas-ice text-adaline-ink hover:border-valley-green",
@@ -163,7 +186,7 @@ export default function WordsPage() {
                 type="button"
                 onClick={() => updateCategory(cat.id)}
                 className={[
-                  "inline-flex min-w-max items-center gap-2 rounded-[20px] border px-5 py-2 text-sm transition-colors",
+                  "inline-flex min-w-max items-center gap-2 rounded-[20px] border px-5 py-2 text-sm transition-colors active:scale-[0.96]",
                   categoryFilter === cat.id
                     ? "border-valley-green bg-valley-green text-canvas-ice"
                     : "border-stone-moss bg-canvas-ice text-adaline-ink hover:border-valley-green",
@@ -181,7 +204,7 @@ export default function WordsPage() {
               type="button"
               onClick={() => updateLetter("all")}
               className={[
-                "inline-flex min-h-9 min-w-9 items-center justify-center rounded-[10px] px-3 text-sm transition-colors",
+                "inline-flex min-h-10 min-w-10 items-center justify-center rounded-[10px] px-3 text-sm transition-colors active:scale-[0.96]",
                 letterFilter === "all"
                   ? "bg-forest-dew text-valley-green"
                   : "text-adaline-ink hover:bg-forest-dew/45",
@@ -195,7 +218,7 @@ export default function WordsPage() {
                 type="button"
                 onClick={() => updateLetter(letter)}
                 className={[
-                  "inline-flex min-h-9 min-w-9 items-center justify-center rounded-[10px] px-3 text-sm transition-colors",
+                  "inline-flex min-h-10 min-w-10 items-center justify-center rounded-[10px] px-3 text-sm transition-colors active:scale-[0.96]",
                   letterFilter === letter
                     ? "bg-forest-dew text-valley-green"
                     : "text-adaline-ink hover:bg-forest-dew/45",
@@ -206,53 +229,74 @@ export default function WordsPage() {
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* CARDS */}
-      <section className="px-6 pt-10 pb-16 sm:px-10">
+      <motion.section variants={sectionFadeUp} className="px-6 pt-10 pb-16 sm:px-10">
         <div className="mx-auto max-w-[1360px]">
           <div className="mb-6 flex items-center justify-between">
             <p className="text-sm text-adaline-ink/75">
-              Showing {shownCount} of {filteredWords.length} words
+              Showing <span className="tabular-nums">{shownCount} of {filteredWords.length}</span> words
             </p>
             <button
               type="button"
               onClick={clearFilters}
               disabled={!filtersActive}
-              className="text-sm font-bold text-valley-green underline-offset-4 hover:underline disabled:text-adaline-ink/35"
+              className="text-sm font-bold text-valley-green underline-offset-4 hover:underline disabled:text-adaline-ink/35 transition-[colors,transform] active:scale-[0.96]"
             >
               Clear filters
             </button>
           </div>
 
-          {visibleWords.length > 0 ? (
-            <div className="flex flex-col gap-5">
-              {/* Row 1 */}
-              <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-                {visibleWords.map((word) => (
-                  <WordCard
-                    key={word.word}
-                    word={word}
-                    category={getCategory(word.category)}
-                  />
-                ))}
-              </div>
-            </div>
-          ) : (
-            <div className="rounded-lg border border-stone-moss bg-forest-dew/25 p-8">
-              <h2 className="text-2xl font-bold text-adaline-ink">No words found</h2>
-              <p className="mt-3 text-sm leading-6 text-adaline-ink/70">
-                Try a different search term, category, or first letter.
-              </p>
-            </div>
-          )}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`${categoryFilter}|${letterFilter}|${query}|${sortMode}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, transition: { duration: 0.1 } }}
+              exit={{ opacity: 0, transition: { duration: 0.1 } }}
+            >
+              {visibleWords.length > 0 ? (
+                <motion.div
+                  variants={cardGridStagger}
+                  initial="initial"
+                  animate="animate"
+                >
+                  <div className="flex flex-col gap-5">
+                    <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+                      {visibleWords.map((word) => (
+                        <motion.div key={word.word} variants={cardFadeUp}>
+                          <WordCard
+                            word={word}
+                            category={getCategory(word.category)}
+                          />
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.div
+                  variants={cardGridStagger}
+                  initial="initial"
+                  animate="animate"
+                >
+                  <motion.div variants={cardFadeUp} className="rounded-lg border border-stone-moss bg-forest-dew/25 p-8">
+                    <h2 className="text-2xl font-bold text-adaline-ink">No words found</h2>
+                    <p className="mt-3 text-pretty text-sm leading-6 text-adaline-ink/70">
+                      Try a different search term, category, or first letter.
+                    </p>
+                  </motion.div>
+                </motion.div>
+              )}
+            </motion.div>
+          </AnimatePresence>
 
           {hasMore ? (
             <div className="mt-8 flex flex-col items-center gap-3">
               <button
                 type="button"
                 onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
-                className="inline-flex min-h-12 w-full max-w-xs items-center justify-center rounded-[20px] bg-amber-seed px-12 py-4 text-base font-bold text-canvas-ice transition-opacity hover:opacity-90"
+                className="inline-flex min-h-12 w-full max-w-xs items-center justify-center rounded-[20px] bg-amber-seed px-12 py-4 text-base font-bold text-canvas-ice transition-[opacity,transform] hover:opacity-90 active:scale-[0.96]"
               >
                 Load more
               </button>
@@ -262,7 +306,8 @@ export default function WordsPage() {
             </div>
           ) : null}
         </div>
-      </section>
+      </motion.section>
+      </motion.div>
     </main>
   );
 }

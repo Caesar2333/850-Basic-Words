@@ -1,181 +1,104 @@
 import Link from "next/link";
-import rewriteExamples from "@/data/rewrite-examples.json";
-
-const principles = [
-  {
-    title: "Fewer words, more expression",
-    body: "Use a smaller core vocabulary to say more real things.",
-  },
-  {
-    title: "Basic words are powerful",
-    body: "Words like get, make, take, and put carry more meaning than many advanced words.",
-  },
-  {
-    title: "Learn by using, not memorizing",
-    body: "See how words combine, build sentences, and express useful situations.",
-  },
-];
-
-const modules = [
-  {
-    title: "850 Words",
-    body: "Browse the full Basic English word set.",
-    href: "/words",
-  },
-  {
-    title: "Daily 10 Words",
-    body: "Learn 10 words at a time with less pressure.",
-    href: "/daily",
-  },
-  {
-    title: "Power Patterns",
-    body: "Study useful combinations built from get, make, take, and put.",
-    href: "/patterns",
-  },
-  {
-    title: "Simple Rewrite",
-    body: "Turn complex English into simple English.",
-    href: "/simplify",
-  },
-];
 
 export default function Home() {
-  const rewriteExample = rewriteExamples[0];
-
   return (
-    <main>
-      <section className="px-6 py-20 sm:px-10 lg:py-24">
-        <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-end">
-          <div className="flex flex-col gap-7">
-            <p className="font-fragmentmono text-sm uppercase text-valley-green">
-              850 English OS
-            </p>
-            <div className="flex max-w-3xl flex-col gap-5">
-              <h1 className="text-balance text-5xl font-bold leading-[1.05] text-adaline-ink sm:text-6xl">
-                Learn English with 850 essential words.
-              </h1>
-              <p className="max-w-2xl text-pretty text-lg leading-8 text-adaline-ink/75">
-                A simple English system that helps you say more with fewer
-                words.
-              </p>
-              <p className="max-w-2xl text-pretty text-base leading-7 text-adaline-ink/65">
-                用 850 个基础词，建立你的英语表达系统。
-              </p>
-            </div>
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/words"
-                className="inline-flex min-h-11 items-center justify-center rounded-[20px] bg-amber-seed px-6 py-3 text-sm font-bold text-canvas-ice transition-transform active:scale-[0.96]"
-              >
-                Start with 850 Words
-              </Link>
-              <Link
-                href="/patterns"
-                className="inline-flex min-h-11 items-center justify-center rounded-[20px] border border-stone-moss px-6 py-3 text-sm font-bold text-adaline-ink transition-colors hover:border-valley-green hover:text-valley-green"
-              >
-                See Power Patterns
-              </Link>
-            </div>
-          </div>
+    <div className="relative flex min-h-screen flex-col overflow-hidden">
+      {/* Background image */}
+      <div className="absolute inset-0 bg-[#0a1d08]">
+        <img
+          src="/images/hero-bg.jpg"
+          alt=""
+          className="h-full w-full object-cover outline outline-1 -outline-offset-1 outline-black/10 dark:outline-white/10"
+        />
+      </div>
 
-          <aside className="rounded-lg border border-stone-moss bg-forest-dew/35 p-6 shadow-[rgba(99,143,61,0.1)_0_0_0_1px]">
-            <p className="font-fragmentmono text-sm uppercase text-valley-green">
-              Product idea
-            </p>
-            <p className="mt-5 text-pretty text-2xl font-bold leading-snug text-adaline-ink">
-              Not more words. More ways to use the words you already know.
-            </p>
-          </aside>
-        </div>
-      </section>
+      {/* Subtle bottom gradient for text readability */}
+      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#0a1d08]/80 via-[#0a1d08]/20 to-transparent" />
 
-      <section className="border-y border-stone-moss bg-canvas-ice px-6 py-14 sm:px-10">
-        <div className="mx-auto grid max-w-6xl gap-4 md:grid-cols-3">
-          {principles.map((principle, index) => (
-            <article
-              key={principle.title}
-              className="rounded-lg border border-mist-gray bg-canvas-ice p-6"
-            >
-              <p className="font-fragmentmono text-sm text-valley-green">
-                0{index + 1}
-              </p>
-              <h2 className="mt-5 text-xl font-bold text-adaline-ink">
-                {principle.title}
-              </h2>
-              <p className="mt-4 text-pretty text-sm leading-6 text-adaline-ink/70">
-                {principle.body}
-              </p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="px-6 py-16 sm:px-10">
-        <div className="mx-auto max-w-6xl">
-          <div className="max-w-2xl">
-            <p className="font-fragmentmono text-sm uppercase text-valley-green">
-              Core modules
-            </p>
-            <h2 className="mt-4 text-balance text-4xl font-bold leading-tight text-adaline-ink">
-              Four entry points for building a simple English system.
-            </h2>
-          </div>
-
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {modules.map((module) => (
-              <Link
-                key={module.href}
-                href={module.href}
-                className="group flex min-h-56 flex-col justify-between rounded-lg border border-mist-gray bg-canvas-ice p-6 transition-colors hover:border-valley-green focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-valley-green"
-              >
-                <span>
-                  <span className="text-xl font-bold text-adaline-ink">
-                    {module.title}
-                  </span>
-                  <span className="mt-4 block text-pretty text-sm leading-6 text-adaline-ink/70">
-                    {module.body}
-                  </span>
-                </span>
-                <span className="text-sm font-bold text-valley-green">
-                  Open module
-                </span>
-              </Link>
-            ))}
+      {/* Navigation */}
+      <nav className="relative z-10 flex h-14 items-center justify-between px-8 sm:px-16">
+        <div className="mx-auto flex h-full w-full max-w-[1360px] items-center justify-between">
+          <span className="text-lg tracking-tight text-white">
+            850 English OS
+          </span>
+          <div className="flex items-center gap-8">
+          <Link
+            href="/words"
+            className="text-sm tracking-tight text-white/70 transition-colors hover:text-white hover:underline decoration-1 underline-offset-4 decoration-white/30"
+          >
+            Words
+          </Link>
+          <Link
+            href="/daily"
+            className="text-sm tracking-tight text-white/70 transition-colors hover:text-white hover:underline decoration-1 underline-offset-4 decoration-white/30"
+          >
+            Daily
+          </Link>
+          <Link
+            href="/patterns"
+            className="text-sm tracking-tight text-white/70 transition-colors hover:text-white hover:underline decoration-1 underline-offset-4 decoration-white/30"
+          >
+            Patterns
+          </Link>
+          <Link
+            href="/words"
+            className="inline-flex items-center rounded-[20px] bg-amber-seed px-6 py-2 text-sm font-medium tracking-tight text-white transition-transform duration-150 ease-out will-change-transform hover:scale-[1.02] active:scale-[0.96]"
+          >
+            Start learning
+          </Link>
           </div>
         </div>
-      </section>
+      </nav>
 
-      <section className="px-6 pb-20 sm:px-10 lg:pb-24">
-        <div className="mx-auto grid max-w-6xl gap-8 rounded-lg border border-stone-moss bg-forest-dew/25 p-6 sm:p-8 lg:grid-cols-[0.8fr_1.2fr]">
-          <div>
-            <p className="font-fragmentmono text-sm uppercase text-valley-green">
-              Rewrite example
-            </p>
-            <h2 className="mt-4 text-balance text-3xl font-bold leading-tight text-adaline-ink">
-              The goal is not to sound advanced. The goal is to be clear.
-            </h2>
-          </div>
-
-          <div className="grid gap-4">
-            <div className="rounded-lg bg-canvas-ice p-5 shadow-[rgba(99,143,61,0.1)_0_0_0_1px]">
-              <p className="font-fragmentmono text-sm uppercase text-valley-green">
-                Original
-              </p>
-              <p className="mt-3 text-pretty text-base leading-7 text-adaline-ink">
-                {rewriteExample.original}
-              </p>
-            </div>
-            <div className="rounded-lg bg-canvas-ice p-5 shadow-[rgba(99,143,61,0.1)_0_0_0_1px]">
-              <p className="font-fragmentmono text-sm uppercase text-valley-green">
-                Simple English
-              </p>
-              <p className="mt-3 text-pretty text-base leading-7 text-adaline-ink">
-                {rewriteExample.simple}
-              </p>
-            </div>
+      {/* Hero content */}
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 text-center">
+        {/* Badge */}
+        <div
+          className="mb-8"
+          style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.2, 0, 0, 1) both' }}
+        >
+          <div className="inline-flex items-center rounded-full border border-white/20 bg-white/5 px-4 py-1">
+            <span className="text-xs tracking-wide text-white/60">
+              ✦&nbsp; Based on Basic English 850
+            </span>
           </div>
         </div>
-      </section>
-    </main>
+
+        {/* Headline */}
+        <div
+          style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.2, 0, 0, 1) both', animationDelay: '100ms' }}
+        >
+          <h1 className="text-balance text-5xl font-light leading-[1.1] tracking-tight text-white sm:text-6xl">
+            Learn English with
+          </h1>
+          <h1 className="text-balance text-5xl font-light leading-[1.1] tracking-tight text-white sm:text-6xl">
+            850 Essential Words
+          </h1>
+        </div>
+
+        {/* Subtitle */}
+        <p
+          className="mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-white/70"
+          style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.2, 0, 0, 1) both', animationDelay: '200ms' }}
+        >
+          A simple English system that helps you say more
+          <br />
+          with fewer words.
+        </p>
+
+        {/* CTA */}
+        <div
+          className="mt-10"
+          style={{ animation: 'hero-fade-up 0.5s cubic-bezier(0.2, 0, 0, 1) both', animationDelay: '300ms' }}
+        >
+          <Link
+            href="/words"
+            className="inline-flex items-center justify-center rounded-full bg-amber-seed px-8 py-3.5 text-sm font-medium tracking-tight text-white transition-transform duration-150 ease-out will-change-transform hover:scale-[1.02] active:scale-[0.96]"
+          >
+            Explore 850 words
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 }

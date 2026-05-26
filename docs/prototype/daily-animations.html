@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Daily Page — Animation Reference (Adaline × Ghibli)</title>
+<style>
+  /* ── Adaline Design System Tokens ───────────────────────────── */
+  :root {
+    --color-canvas-ice: #fbfdf6;
+    --color-adaline-ink: #0a1d08;
+    --color-mist-gray: #c5ccb6;
+    --color-deep-earth: #31200b;
+    --color-valley-green: #203b14;
+    --color-stone-moss: #e0e5d5;
+    --color-amber-seed: #4a3212;
+    --color-forest-dew: #d7e8b5;
+    --color-blackest-night: #000000;
+    --shadow-subtle: rgba(99, 143, 61, 0.1) 0px 0px 0px 1px;
+    --radius-card: 8px;
+    --radius-pill: 20px;
+    --font-akkurat: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-fragmentmono: "SF Mono", "Fira Code", "Consolas", monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-akkurat);
+    background: var(--color-canvas-ice);
+    color: var(--color-adaline-ink);
+    letter-spacing: -0.04em;
+    padding: 40px;
+  }
+
+  h1 { font-size: 36px; margin-bottom: 8px; letter-spacing: -0.04em; }
+  h2 { font-size: 20px; margin: 40px 0 16px; color: var(--color-valley-green); }
+  h3 { font-size: 16px; margin: 24px 0 8px; }
+  p { margin-bottom: 12px; max-width: 600px; }
+  code { font-family: var(--font-fragmentmono); font-size: 13px; background: var(--color-forest-dew); padding: 2px 6px; border-radius: 4px; letter-spacing: 0; }
+
+  .intro { margin-bottom: 32px; }
+
+  /* ── Color Swatches ──────────────────────────────────────── */
+  .swatches { display: flex; gap: 16px; flex-wrap: wrap; margin: 16px 0 32px; }
+  .swatch { width: 120px; padding: 12px; border-radius: 8px; border: 1px solid var(--color-mist-gray); }
+  .swatch span { display: block; font-family: var(--font-fragmentmono); font-size: 11px; letter-spacing: 0; }
+  .swatch .name { font-size: 12px; font-weight: 600; margin-bottom: 4px; letter-spacing: -0.02em; }
+  .swatch .color { height: 40px; border-radius: 4px; margin-bottom: 8px; border: 1px solid rgba(0,0,0,0.06); }
+
+  /* ── Animation Demo Cards ─────────────────────────────────── */
+  .demo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin: 20px 0; }
+  .demo-card {
+    height: 180px;
+    border-radius: var(--radius-card);
+    border: 1px solid var(--color-mist-gray);
+    background: var(--color-canvas-ice);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px;
+    box-shadow: var(--shadow-subtle);
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+  }
+  .demo-card:hover { box-shadow: 0 4px 12px rgba(32,59,20,0.1); }
+
+  .demo-word {
+    font-size: 24px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-adaline-ink);
+    letter-spacing: -0.04em;
+  }
+  .demo-hint {
+    font-size: 11px;
+    color: var(--color-adaline-ink);
+    opacity: 0.35;
+  }
+
+  /* ── Animation 1: Entrance (spring entrance) ─────────────── */
+  .anim-entrance {
+    animation: entranceSpring 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+  @keyframes entranceSpring {
+    0% { opacity: 0; transform: translateY(28px) rotate(-1.5deg); }
+    100% { opacity: 1; transform: translateY(0) rotate(0); }
+  }
+
+  /* ── Animation 2: Flip (3D rotateY) ──────────────────────── */
+  .flip-container {
+    perspective: 800px;
+  }
+  .flip-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1);
+    transform-style: preserve-3d;
+  }
+  .flip-container.flipped .flip-inner {
+    transform: rotateY(180deg);
+  }
+  .flip-front, .flip-back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: var(--radius-card);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    border: 2px solid var(--color-valley-green);
+    background: var(--color-canvas-ice);
+  }
+  .flip-front {
+    border-color: var(--color-mist-gray);
+  }
+  .flip-back {
+    transform: rotateY(180deg);
+  }
+
+  /* ── Animation 3: Hover wobble ───────────────────────────── */
+  .anim-wobble {
+    transition: transform 0.35s ease;
+  }
+  .anim-wobble:hover {
+    animation: wobble 0.35s ease;
+  }
+  @keyframes wobble {
+    0% { transform: rotate(0); }
+    33% { transform: rotate(-0.8deg); }
+    66% { transform: rotate(0.8deg); }
+    100% { transform: rotate(0); }
+  }
+
+  /* ── Animation 4: Dust motes ─────────────────────────────── */
+  .motes-container {
+    position: relative;
+    height: 120px;
+    background: var(--color-canvas-ice);
+    border-radius: var(--radius-card);
+    border: 1px solid var(--color-mist-gray);
+    overflow: hidden;
+    margin: 12px 0;
+  }
+  .mote {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--color-forest-dew);
+    opacity: 0;
+    animation: float 6s ease-in-out infinite;
+  }
+  .mote:nth-child(1) { width: 3px; height: 3px; left: 20%; top: 30%; animation-delay: 0s; animation-duration: 5s; }
+  .mote:nth-child(2) { width: 4px; height: 4px; left: 50%; top: 50%; animation-delay: 1.2s; animation-duration: 7s; }
+  .mote:nth-child(3) { width: 2px; height: 2px; left: 75%; top: 20%; animation-delay: 2.5s; animation-duration: 6s; }
+  .mote:nth-child(4) { width: 5px; height: 5px; left: 35%; top: 70%; animation-delay: 0.8s; animation-duration: 8s; }
+  .mote:nth-child(5) { width: 3px; height: 3px; left: 85%; top: 60%; animation-delay: 3.2s; animation-duration: 5.5s; }
+  .mote:nth-child(6) { width: 2px; height: 2px; left: 10%; top: 80%; animation-delay: 1.8s; animation-duration: 6.5s; }
+
+  @keyframes float {
+    0%   { opacity: 0; transform: translateY(0); }
+    30%  { opacity: 0.4; }
+    70%  { opacity: 0.3; }
+    100% { opacity: 0; transform: translateY(-40px); }
+  }
+
+  /* ── Animation 5: Progress bar ───────────────────────────── */
+  .progress-track {
+    height: 6px;
+    background: var(--color-stone-moss);
+    border-radius: 999px;
+    overflow: hidden;
+    margin: 8px 0;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--color-valley-green);
+    border-radius: 999px;
+    width: 0%;
+    transition: width 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+
+  /* ── Animation Parameters Table ──────────────────────────── */
+  table {
+    width: 100%;
+    max-width: 700px;
+    border-collapse: collapse;
+    margin: 16px 0 32px;
+    font-size: 14px;
+  }
+  th, td {
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--color-stone-moss);
+  }
+  th { font-family: var(--font-fragmentmono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.02em; color: var(--color-valley-green); }
+  td { font-family: var(--font-fragmentmono); font-size: 13px; letter-spacing: 0; }
+  td:first-child { font-weight: 600; }
+
+  /* ── Prototype Variant Previews ──────────────────────────── */
+  .variant-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    margin: 16px 0 32px;
+  }
+  .variant-preview {
+    border-radius: var(--radius-card);
+    border: 1px solid var(--color-mist-gray);
+    overflow: hidden;
+  }
+  .variant-preview-header {
+    padding: 10px 14px;
+    font-family: var(--font-fragmentmono);
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    background: var(--color-forest-dew);
+    border-bottom: 1px solid var(--color-stone-moss);
+  }
+  .variant-preview-body {
+    padding: 14px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .variant-preview-body p { margin-bottom: 4px; max-width: 100%; }
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: var(--radius-pill);
+    background: var(--color-forest-dew);
+    color: var(--color-valley-green);
+    font-family: var(--font-fragmentmono);
+    font-size: 10px;
+    letter-spacing: 0;
+    margin-right: 4px;
+  }
+
+  /* ── Buttons ───────────────────────────────────────────────── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-stone-moss);
+    background: var(--color-canvas-ice);
+    padding: 10px 24px;
+    font-family: var(--font-akkurat);
+    font-size: 14px;
+    color: var(--color-adaline-ink);
+    opacity: 0.6;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+    letter-spacing: -0.02em;
+  }
+  .btn:hover {
+    border-color: var(--color-valley-green);
+    color: var(--color-valley-green);
+  }
+
+  hr { border: none; border-top: 1px solid var(--color-stone-moss); margin: 40px 0; }
+</style>
+</head>
+<body>
+
+<h1>Daily 翻卡动画方案参考</h1>
+<p class="intro">
+  最终选型: <strong>Ghibli 动画 × Adaline 设计系统 (Variant G)</strong><br>
+  技术栈: <code>framer-motion v12</code> (已安装，零新增依赖)<br>
+  UI 配色: 见下方 Adaline 色板 | 动画参数: 见下方参数表 | 原型: <code>/prototype/animations</code>
+</p>
+
+<hr />
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- DESIGN TOKENS -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<h2>Adaline 设计色板</h2>
+<div class="swatches">
+  <div class="swatch">
+    <div class="color" style="background:#fbfdf6"></div>
+    <span class="name">Canvas Ice</span>
+    <span>#fbfdf6</span>
+  </div>
+  <div class="swatch">
+    <div class="color" style="background:#0a1d08"></div>
+    <span class="name" style="color:white; background:#0a1d08; padding:0 4px; border-radius:2px">Adaline Ink</span>
+    <span>#0a1d08</span>
+  </div>
+  <div class="swatch">
+    <div class="color" style="background:#c5ccb6"></div>
+    <span class="name">Mist Gray</span>
+    <span>#c5ccb6</span>
+  </div>
+  <div class="swatch">
+    <div class="color" style="background:#203b14"></div>
+    <span class="name" style="color:white">Valley Green</span>
+    <span>#203b14</span>
+  </div>
+  <div class="swatch">
+    <div class="color" style="background:#e0e5d5"></div>
+    <span class="name">Stone Moss</span>
+    <span>#e0e5d5</span>
+  </div>
+  <div class="swatch">
+    <div class="color" style="background:#d7e8b5"></div>
+    <span class="name">Forest Dew</span>
+    <span>#d7e8b5</span>
+  </div>
+  <div class="swatch">
+    <div class="color" style="background:#4a3212"></div>
+    <span class="name" style="color:white">Amber Seed</span>
+    <span>#4a3212</span>
+  </div>
+</div>
+
+<h2>Typography</h2>
+<p><strong>Akkurat</strong> — 所有标题/正文，<code>letter-spacing: -0.04em</code>，weight 400/700</p>
+<p><strong>Fragment Mono</strong> — 标签/计数，<code>letter-spacing: 0.02em</code>，weight 400</p>
+
+<h2>Shadows & Radius</h2>
+<p>卡片阴影: <code>rgba(99, 143, 61, 0.1) 0px 0px 0px 1px</code>（极淡，仅 1px 轮廓）</p>
+<p>卡片圆角: <code>8px</code>（rounded-lg）</p>
+<p>按钮圆角: <code>20px</code>（rounded-[20px] / pill）</p>
+
+<hr />
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- ANIMATION PARAMETERS -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<h2>动画参数表（framer-motion）</h2>
+
+<table>
+  <tr>
+    <th>动画</th>
+    <th>属性</th>
+    <th>值</th>
+  </tr>
+  <tr>
+    <td rowspan="4">① 卡片入场</td>
+    <td>初始</td>
+    <td>{ opacity: 0, y: 28, rotate: -1.5 }</td>
+  </tr>
+  <tr>
+    <td>目标</td>
+    <td>{ opacity: 1, y: 0, rotate: 0 }</td>
+  </tr>
+  <tr>
+    <td>过渡</td>
+    <td>spring, stiffness: 70, damping: 15, mass: 1.1</td>
+  </tr>
+  <tr>
+    <td>错开</td>
+    <td>staggerChildren: 0.09 (90ms)</td>
+  </tr>
+  <tr>
+    <td rowspan="3">② 卡片翻转</td>
+    <td>transform</td>
+    <td>rotateY: 0 → 180</td>
+  </tr>
+  <tr>
+    <td>perspective</td>
+    <td>800px (父容器)</td>
+  </tr>
+  <tr>
+    <td>过渡</td>
+    <td>spring, stiffness: 110, damping: 16, mass: 1.1</td>
+  </tr>
+  <tr>
+    <td rowspan="2">③ 悬浮微动</td>
+    <td>whileHover</td>
+    <td>{ rotate: [0, -0.8, 0.8, 0] }</td>
+  </tr>
+  <tr>
+    <td>过渡</td>
+    <td>0.35s ease</td>
+  </tr>
+  <tr>
+    <td rowspan="3">④ 氛围粒子</td>
+    <td>元素</td>
+    <td>8 个 ~3px 圆点，Forest Dew 色</td>
+  </tr>
+  <tr>
+    <td>动画</td>
+    <td>y: 往复 20-50px, opacity: 0→0.5→0</td>
+  </tr>
+  <tr>
+    <td>周期</td>
+    <td>5-11s，easeInOut，随机延迟</td>
+  </tr>
+  <tr>
+    <td rowspan="2">⑤ 进度条</td>
+    <td>过渡</td>
+    <td>width: 0% → target, 0.7s cubic-bezier(0.25,0.46,0.45,0.94)</td>
+  </tr>
+  <tr>
+    <td>样式</td>
+    <td>Stone Moss 轨道 / Valley Green 填充 / 圆角</td>
+  </tr>
+</table>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- CSS DEMOS -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<h2>动画 Demo（CSS 近似版）</h2>
+
+<h3>① Spring 入场</h3>
+<div class="demo-grid">
+  <div class="demo-card anim-entrance" style="animation-delay:0s">
+    <span class="demo-word">get</span>
+    <span class="demo-hint">tap me</span>
+  </div>
+  <div class="demo-card anim-entrance" style="animation-delay:0.09s">
+    <span class="demo-word">make</span>
+    <span class="demo-hint">tap me</span>
+  </div>
+  <div class="demo-card anim-entrance" style="animation-delay:0.18s">
+    <span class="demo-word">take</span>
+    <span class="demo-hint">tap me</span>
+  </div>
+  <div class="demo-card anim-entrance" style="animation-delay:0.27s">
+    <span class="demo-word">put</span>
+    <span class="demo-hint">tap me</span>
+  </div>
+</div>
+
+<h3>② 3D 翻转（点击卡片翻转）</h3>
+<div class="demo-grid">
+  <div class="demo-card flip-container" onclick="this.classList.toggle('flipped')" style="padding:0; overflow:hidden">
+    <div class="flip-inner">
+      <div class="flip-front">
+        <span class="demo-word">give</span>
+        <span class="demo-hint">click me</span>
+      </div>
+      <div class="flip-back">
+        <span class="demo-word">give</span>
+        <span style="font-size:13px; color:var(--color-adaline-ink); opacity:0.75; margin-top:8px">给、给予</span>
+        <span style="font-size:12px; color:var(--color-adaline-ink); opacity:0.9; margin-top:8px; padding:6px 10px; background:var(--color-forest-dew); border-radius:4px">Give me a hand.</span>
+        <span class="demo-hint" style="margin-top:8px">tap back</span>
+      </div>
+    </div>
+  </div>
+  <div class="demo-card flip-container" onclick="this.classList.toggle('flipped')" style="padding:0; overflow:hidden">
+    <div class="flip-inner">
+      <div class="flip-front">
+        <span class="demo-word">come</span>
+        <span class="demo-hint">click me</span>
+      </div>
+      <div class="flip-back">
+        <span class="demo-word">come</span>
+        <span style="font-size:13px; color:var(--color-adaline-ink); opacity:0.75; margin-top:8px">来、到来</span>
+        <span style="font-size:12px; color:var(--color-adaline-ink); opacity:0.9; margin-top:8px; padding:6px 10px; background:var(--color-forest-dew); border-radius:4px">Come here please.</span>
+        <span class="demo-hint" style="margin-top:8px">tap back</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3>③ Wobble 悬浮微动（hover 卡片）</h3>
+<div class="demo-grid">
+  <div class="demo-card anim-wobble">
+    <span class="demo-word">go</span>
+    <span class="demo-hint">hover me</span>
+  </div>
+  <div class="demo-card anim-wobble">
+    <span class="demo-word">have</span>
+    <span class="demo-hint">hover me</span>
+  </div>
+</div>
+
+<h3>④ 氛围粒子（dust motes）</h3>
+<div class="motes-container">
+  <div class="mote"></div>
+  <div class="mote"></div>
+  <div class="mote"></div>
+  <div class="mote"></div>
+  <div class="mote"></div>
+  <div class="mote"></div>
+</div>
+
+<h3>⑤ 进度条（点击推进）</h3>
+<div style="max-width:400px; margin:12px 0 24px">
+  <div class="progress-track">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+  <button class="btn" onclick="stepProgress()" style="margin-top:8px">↻ 推进进度</button>
+</div>
+
+<hr />
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- VARIANT REFERENCE -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<h2>原型变体索引</h2>
+<p>完整原型在 <code>http://localhost:3000/prototype/animations</code>（需要 dev server）<br>
+以下为每个变体的摘要供参考配色与动画语言。</p>
+
+<div class="variant-grid">
+  <div class="variant-preview">
+    <div class="variant-preview-header">A · Breath of the Wild</div>
+    <div class="variant-preview-body">
+      <p><span class="tag">否决</span></p>
+      <p><strong>配色</strong> #f4f7ee / #d7e8b5 / #203b14</p>
+      <p><strong>动画</strong> 柔和弹簧，绿色调浮动光晕</p>
+      <p><strong>感觉</strong> 自然、呼吸感</p>
+    </div>
+  </div>
+  <div class="variant-preview">
+    <div class="variant-preview-header">B · Spider-Verse</div>
+    <div class="variant-preview-body">
+      <p><span class="tag">否决</span></p>
+      <p><strong>配色</strong> #0d0d0d / #f5e53b / #1a1a1a</p>
+      <p><strong>动画</strong> 高弹性弹簧，速度线，冲击感</p>
+      <p><strong>感觉</strong> 动态、夸张</p>
+    </div>
+  </div>
+  <div class="variant-preview">
+    <div class="variant-preview-header">C · Her</div>
+    <div class="variant-preview-body">
+      <p><span class="tag">否决</span></p>
+      <p><strong>配色</strong> #faf8f5 / #e8e4dd / 浅灰</p>
+      <p><strong>动画</strong> 极慢淡入淡出，字距呼吸</p>
+      <p><strong>感觉</strong> 极简安宁</p>
+    </div>
+  </div>
+  <div class="variant-preview">
+    <div class="variant-preview-header">D · Ghibli 原版</div>
+    <div class="variant-preview-body">
+      <p><span class="tag">参考</span></p>
+      <p><strong>配色</strong> #fcf6ec / #d4a373 / #3e2c1a / #8b6914</p>
+      <p><strong>动画</strong> wobble + dust motes + 弹簧翻转</p>
+      <p><strong>感觉</strong> 暖色手绘、旧纸张</p>
+      <p><strong>注意</strong> UI 不用此配色，仅保留动画语言</p>
+    </div>
+  </div>
+  <div class="variant-preview" style="border-color:var(--color-valley-green); border-width:2px">
+    <div class="variant-preview-header" style="background:var(--color-valley-green); color:white; letter-spacing:0.02em">★ G · Adaline × Ghibli (中选)</div>
+    <div class="variant-preview-body">
+      <p><span class="tag" style="background:var(--color-valley-green); color:white">最终方案</span></p>
+      <p><strong>配色</strong> Canvas Ice / Valley Green / Mist Gray / Forest Dew / Adaline Ink</p>
+      <p><strong>动画</strong> Ghibli 的 wobble + dust motes + 弹簧入场 + 弹簧翻转</p>
+      <p><strong>感觉</strong> 呼吸感 + Adaline 沉稳绿色调</p>
+    </div>
+  </div>
+  <div class="variant-preview">
+    <div class="variant-preview-header">E · Cyberpunk 2077</div>
+    <div class="variant-preview-body">
+      <p><span class="tag">否决</span></p>
+      <p><strong>配色</strong> #07060f / #00f0ff / #ff00aa / #7b2fff</p>
+      <p><strong>动画</strong> 全息聚焦，扫描线，霓虹光晕</p>
+      <p><strong>感觉</strong> 赛博、科技感</p>
+    </div>
+  </div>
+  <div class="variant-preview">
+    <div class="variant-preview-header">F · Vision Pro</div>
+    <div class="variant-preview-body">
+      <p><span class="tag">否决</span></p>
+      <p><strong>配色</strong> 渐变灰白 / #6366f1 / #06b6d4</p>
+      <p><strong>动画</strong> 毛玻璃、深度阴影、精确缓动</p>
+      <p><strong>感觉</strong> 空间感、精致抛光</p>
+    </div>
+  </div>
+</div>
+
+<hr />
+
+<h2>在 Daily 页集成步骤</h2>
+<ol style="max-width:600px; line-height:1.8; margin:16px 0">
+  <li>在 <code>src/app/daily/page.tsx</code> 顶部添加 <code>import { motion, AnimatePresence } from "framer-motion"</code></li>
+  <li>卡片容器用 <code>motion.div</code>，设 <code>initial</code>/<code>animate</code>/<code>variants</code> 控制 stagger entrance</li>
+  <li>每张卡片用 <code>motion.button</code>，设 <code>variants.hidden</code>/<code>visible</code> 控制入场</li>
+  <li>翻转用 <code>motion.div</code> + <code>style={{ transformStyle: "preserve-3d" }}</code> + <code>animate={{ rotateY: flipped ? 180 : 0 }}</code></li>
+  <li>正反面用 <code>style={{ backfaceVisibility: "hidden" }}</code>，背面加 <code>transform: "rotateY(180deg)"</code></li>
+  <li>背景加 <code>pointer-events-none</code> 的 dust motes 容器</li>
+  <li>进度条改为 <code>motion.div</code>，<code>animate={{ width }}</code> 控制填充</li>
+  <li>Shuffle 按钮用 <code>rounded-[20px]</code> + <code>hover:text-valley-green</code></li>
+  <li>所有颜色引用 Tailwind v4 变量: <code>bg-canvas-ice</code>, <code>text-adaline-ink</code>, <code>border-mist-gray</code>, <code>bg-valley-green</code> 等</li>
+</ol>
+
+<script>
+  let progress = 0;
+  function stepProgress() {
+    progress = Math.min(progress + 12.5, 100);
+    document.getElementById('progressFill').style.width = progress + '%';
+    if (progress >= 100) progress = 0;
+  }
+</script>
+
+</body>
+</html>

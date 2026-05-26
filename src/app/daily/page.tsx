@@ -1,12 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useMemo, useState, useCallback } from "react";
+import { Shuffle } from "lucide-react";
 import basicWords from "@/data/basic-850.json";
-import dailyLessons from "@/data/daily-lessons.json";
-import type { BasicWord, DailyLesson } from "@/types/content";
+import type { BasicWord } from "@/types/content";
 
 const words = basicWords as BasicWord[];
-const lessons = dailyLessons as DailyLesson[];
 
 type LessonWord = {
   word: string;
@@ -14,80 +14,100 @@ type LessonWord = {
   example: string;
   translation: string;
   pattern: string;
+  patternZh: string;
 };
 
-const dailyDetails: Record<string, Pick<LessonWord, "translation" | "pattern">> = {
-  get: { translation: "我收到了你的消息。", pattern: "get ready" },
-  make: { translation: "让它简单一点。", pattern: "make sure" },
-  take: { translation: "慢慢来，不用急。", pattern: "take care" },
-  give: { translation: "给我一分钟。", pattern: "give up" },
-  put: { translation: "把它放在这里。", pattern: "put on" },
-  go: { translation: "跟我一起走。", pattern: "go on" },
-  come: { translation: "来这里。", pattern: "come back" },
-  have: { translation: "祝你今天愉快。", pattern: "have to" },
-  be: { translation: "说清楚一点。", pattern: "be ready" },
-  do: { translation: "尽你最大的努力。", pattern: "do well" },
-};
+function pickRandomWords(): LessonWord[] {
+  const pool = [...words];
+  const picked: LessonWord[] = [];
 
-function getLessonWords(lesson: DailyLesson): LessonWord[] {
-  return lesson.words.map((word) => {
-    const source = words.find((entry) => entry.word === word);
-    const details = dailyDetails[word];
+  for (let i = 0; i < 10; i++) {
+    const idx = Math.floor(Math.random() * pool.length);
+    const w = pool.splice(idx, 1)[0];
 
-    return {
-      word,
-      zh: source?.zh ?? "",
-      example: source?.examples[0] ?? "",
-      translation: details?.translation ?? "中文翻译待补充。",
-      pattern: details?.pattern ?? source?.patterns[0] ?? "basic",
-    };
-  });
+    picked.push({
+      word: w.word,
+      zh: w.zh,
+      example: w.examples[0] ?? "",
+      translation: w.exampleTranslation ?? "",
+      pattern: w.patterns[0] ?? "basic",
+      patternZh: w.patternZh?.[0] ?? "",
+    });
+  }
+
+  return picked;
 }
 
 export default function DailyPage() {
-  const lesson = lessons[0];
-  const lessonWords = useMemo(() => getLessonWords(lesson), [lesson]);
+  const [currentWords, setCurrentWords] = useState<LessonWord[]>(pickRandomWords);
   const [flippedWords, setFlippedWords] = useState<Set<string>>(new Set());
+
+  const shuffle = useCallback(() => {
+    setCurrentWords(pickRandomWords());
+    setFlippedWords(new Set());
+  }, []);
 
   function toggleWord(word: string) {
     setFlippedWords((current) => {
       const next = new Set(current);
-
       if (next.has(word)) {
         next.delete(word);
       } else {
         next.add(word);
       }
-
       return next;
     });
   }
 
+  const knownCount = useMemo(
+    () => currentWords.filter((w) => flippedWords.has(w.word)).length,
+    [currentWords, flippedWords],
+  );
+
   return (
-    <main className="bg-canvas-ice">
+    <main className="bg-canvas-ice relative">
+      {/* Dust motes */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute size-1 rounded-full bg-forest-dew/20"
+            style={{ left: `${Math.random()*100}%`, top: `${Math.random()*100}%` }}
+            animate={{ y: [0, -20, 0], opacity: [0, 0.4, 0] }}
+            transition={{ duration: 5+Math.random()*6, repeat: Infinity, delay: Math.random()*4, ease: "easeInOut" }}
+          />
+        ))}
+      </div>
       <section className="px-6 py-16 sm:px-10">
-        <div className="mx-auto grid max-w-[1360px] gap-8 lg:grid-cols-[1fr_280px] lg:items-end">
+        <div className="mx-auto grid max-w-[1360px] gap-8 lg:grid-cols-[1fr_280px] lg:items-start">
           <div className="max-w-4xl">
             <p className="font-fragmentmono text-xs font-bold uppercase text-valley-green">
-              Day {lesson.day}
+              Daily 10 / Random
             </p>
             <h1 className="mt-5 text-balance text-[53px] font-bold leading-[1.05] text-adaline-ink max-sm:text-5xl">
               Daily 10 Words
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-[1.43] text-adaline-ink/75">
-              Learn 10 words at a time. Small steps, real progress.
+              Random words from the 850 set. Tap to review, shuffle for a fresh batch.
             </p>
           </div>
 
           <aside className="rounded-lg border border-stone-moss bg-forest-dew/35 p-6">
             <p className="font-fragmentmono text-xs font-bold uppercase text-valley-green">
-              Today
+              Progress
             </p>
-            <p className="mt-3 text-2xl font-bold leading-[1.3] text-adaline-ink">
-              {lesson.title}
+            <div className="mt-3 h-1.5 w-full rounded-full bg-stone-moss">
+              <motion.div
+                className="h-full rounded-full bg-valley-green"
+                animate={{ width: `${(knownCount / 10) * 100}%` }}
+                transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+              />
+            </div>
+            <p className="mt-1 font-fragmentmono text-xs text-valley-green/50">
+              {knownCount} / 10
             </p>
             <p className="mt-3 text-sm leading-[1.43] text-adaline-ink/75">
-              10 action words to build your first simple sentences.
+              Words you&apos;ve tapped to review.
             </p>
           </aside>
         </div>
@@ -95,21 +115,37 @@ export default function DailyPage() {
 
       <section className="border-y border-stone-moss px-6 py-8 sm:px-10">
         <div className="mx-auto max-w-[1360px]">
-          <div className="mb-6">
-            <h2 className="text-[28px] font-bold leading-tight text-adaline-ink">
-              Today's words - tap each card to flip
-            </h2>
-            <p className="mt-3 text-sm leading-[1.43] text-adaline-ink/75">
-              Tap a card to reveal meaning, example, and translation. Tap again to flip back.
-            </p>
+          <div className="mb-6 flex items-center justify-between">
+            <div>
+              <h2 className="text-[28px] font-bold leading-tight text-adaline-ink">
+                Today&apos;s words
+              </h2>
+              <p className="mt-3 text-sm leading-[1.43] text-adaline-ink/75">
+                Tap a card to reveal meaning, example, and translation. Tap again to flip back.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={shuffle}
+              aria-label="Shuffle words"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-stone-moss bg-canvas-ice text-adaline-ink/60 transition-colors hover:border-valley-green hover:text-valley-green active:scale-[0.94]"
+            >
+              <Shuffle size={18} />
+            </button>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            {lessonWords.map((entry) => {
+          <AnimatePresence mode="popLayout">
+            <motion.div
+              className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5"
+              initial="hidden"
+              animate="visible"
+              variants={{ visible: { transition: { staggerChildren: 0.09 } } }}
+            >
+            {currentWords.map((entry) => {
               const flipped = flippedWords.has(entry.word);
 
               return (
-                <button
+                <motion.button
                   key={entry.word}
                   type="button"
                   aria-label={`${entry.word} word card`}
@@ -117,19 +153,44 @@ export default function DailyPage() {
                   data-daily-card="true"
                   data-flipped={flipped ? "true" : "false"}
                   onClick={() => toggleWord(entry.word)}
-                  className="h-[200px] rounded-xl text-left outline-none transition-transform active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-valley-green focus-visible:ring-offset-2 focus-visible:ring-offset-canvas-ice"
+                  className="group relative h-[240px] w-full rounded-xl text-left outline-none focus-visible:ring-2 focus-visible:ring-valley-green focus-visible:ring-offset-2 focus-visible:ring-offset-canvas-ice"
+                  whileHover={{ rotate: [0, -0.8, 0.8, 0], transition: { duration: 0.35 } }}
+                  whileTap={{ scale: 0.98 }}
+                  style={{ perspective: 800 }}
+                  variants={{
+                    hidden: { opacity: 0, y: 28 },
+                    visible: {
+                      opacity: 1, y: 0,
+                      transition: { type: "spring", stiffness: 70, damping: 15, mass: 1.1 },
+                    },
+                    exit: { opacity: 0, scale: 0.8, y: -16, transition: { duration: 0.2 } },
+                  }}
                 >
-                  {flipped ? (
-                    <span className="flex h-full flex-col justify-between rounded-xl border-2 border-valley-green bg-canvas-ice p-4">
-                      <span>
-                        <span className="flex items-start justify-between gap-3">
+                  <motion.div
+                    className="size-full"
+                    animate={{ rotateY: flipped ? 180 : 0 }}
+                    transition={{ type: "spring", stiffness: 110, damping: 16, mass: 1.1 }}
+                    style={{ transformStyle: "preserve-3d" }}
+                  >
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 rounded-lg border border-mist-gray bg-canvas-ice p-5" style={{ backfaceVisibility: "hidden" }}>
+                      <span className="text-3xl font-bold uppercase leading-none text-adaline-ink">
+                        {entry.word}
+                      </span>
+                      <span className="text-sm text-adaline-ink/45">tap me</span>
+                    </div>
+                    <div className="absolute inset-0 flex flex-col justify-between rounded-lg border-2 border-valley-green/70 bg-canvas-ice p-4" style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}>
+                      <div>
+                        <div className="flex items-start justify-between gap-3">
                           <span className="text-xl font-bold uppercase leading-none text-adaline-ink">
                             {entry.word}
                           </span>
-                          <span className="rounded-[20px] bg-forest-dew px-3 py-1 text-xs font-bold leading-none text-valley-green">
-                            seen
-                          </span>
-                        </span>
+                          <div className="flex flex-col items-end gap-1.5">
+                            <span className="rounded-[20px] bg-forest-dew px-3 py-1 text-xs font-bold leading-none text-valley-green">
+                              seen
+                            </span>
+                            <span className="text-[11px] text-adaline-ink/45">tap back</span>
+                          </div>
+                        </div>
                         <span className="mt-4 block text-sm leading-5 text-adaline-ink/75">
                           {entry.zh}
                         </span>
@@ -139,61 +200,17 @@ export default function DailyPage() {
                         <span className="mt-3 block text-xs leading-4 text-adaline-ink/65">
                           {entry.translation}
                         </span>
+                      </div>
+                      <span className="w-fit rounded-[20px] bg-forest-dew px-3 py-1 text-xs text-valley-green">
+                        {entry.pattern}{entry.patternZh ? ` · ${entry.patternZh}` : ""}
                       </span>
-                      <span className="flex items-center justify-between gap-2">
-                        <span className="rounded-[20px] bg-forest-dew px-3 py-1 text-xs text-valley-green">
-                          {entry.pattern}
-                        </span>
-                        <span className="text-xs text-adaline-ink/45">tap back</span>
-                      </span>
-                    </span>
-                  ) : (
-                    <span className="flex h-full flex-col items-center justify-center gap-4 rounded-xl border border-mist-gray bg-canvas-ice p-5">
-                      <span className="text-3xl font-bold uppercase leading-none text-adaline-ink">
-                        {entry.word}
-                      </span>
-                      <span className="text-sm text-adaline-ink/45">tap me</span>
-                    </span>
-                  )}
-                </button>
+                    </div>
+                  </motion.div>
+                </motion.button>
               );
             })}
-          </div>
-        </div>
-      </section>
-
-      <section className="px-6 py-16 sm:px-10 lg:py-20">
-        <div className="mx-auto grid max-w-[1360px] gap-10 lg:grid-cols-[400px_1fr] lg:items-center">
-          <div>
-            <p className="font-fragmentmono text-xs font-bold uppercase text-valley-green">
-              Practice preview
-            </p>
-            <h2 className="mt-4 text-balance text-4xl font-bold leading-[1.15] text-adaline-ink">
-              Static exercises, visible answers.
-            </h2>
-            <p className="mt-4 text-sm leading-[1.43] text-adaline-ink/75">
-              This MVP shows how practice will look without recording answers or completion state.
-            </p>
-          </div>
-
-          <div className="grid gap-4">
-            {lesson.practice.map((practice) => (
-              <article
-                key={`${practice.type}-${practice.question}`}
-                className="rounded-lg border border-stone-moss bg-canvas-ice p-6"
-              >
-                <p className="font-fragmentmono text-xs font-bold uppercase text-valley-green">
-                  {practice.type}
-                </p>
-                <p className="mt-4 text-lg leading-8 text-adaline-ink">
-                  {practice.question}
-                </p>
-                <p className="mt-4 rounded bg-forest-dew/35 p-3 text-sm font-bold text-adaline-ink">
-                  Answer: {practice.answer}
-                </p>
-              </article>
-            ))}
-          </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </section>
     </main>
