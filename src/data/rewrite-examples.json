@@ -1,0 +1,20 @@
+[
+  {
+    "original": "The system encountered an unexpected error during initialization.",
+    "simple": "The system had a problem when it started.",
+    "why": "It replaces difficult words with basic words.",
+    "keyWords": ["system", "have", "problem", "start"]
+  },
+  {
+    "original": "Please confirm whether you require additional assistance.",
+    "simple": "Please tell me if you need more help.",
+    "why": "It uses common words instead of formal words.",
+    "keyWords": ["tell", "need", "more", "help"]
+  },
+  {
+    "original": "We need to investigate the cause of the issue.",
+    "simple": "We need to look into why this problem happened.",
+    "why": "It changes formal words into clear everyday English.",
+    "keyWords": ["need", "look", "why", "problem", "happen"]
+  }
+]

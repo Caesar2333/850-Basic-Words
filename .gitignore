@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+.pnp.cjs
+.pnp.loader.mjs
+.yarn/
+yarn-error.log
+
+# Build output
+.next/
+out/
+dist/
+*.tsbuildinfo
+
+# Temp
+.tmp/
+*.log
+*.swp
+*.swo
+*~
+
+# Environment
+.env*
+!.env.example
+
+# Local config
+*.local.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*

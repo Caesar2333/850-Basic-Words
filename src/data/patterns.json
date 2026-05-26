@@ -1,0 +1,402 @@
+[
+  {
+    "word": "get",
+    "coreMeaning": "receive, become, understand, move",
+    "zh": "得到、变得、理解、移动",
+    "examples": ["I got your message.", "I got tired.", "I got it."],
+    "patterns": [
+      {
+        "phrase": "get up",
+        "zh": "起床",
+        "literalBreakdown": "get(到达) + up(向上) -> 从床面到达上方 -> 起床",
+        "usageScenarios": ["日常", "早晨", "作息"],
+        "examples": ["I get up at seven.", "She got up late this morning.", "Get up, it is time for school."],
+        "collocation": "get up + time / early / late",
+        "antonym": "go to bed, lie down"
+      },
+      {
+        "phrase": "get ready",
+        "zh": "准备好",
+        "literalBreakdown": "get(变得) + ready(准备好的) -> 进入准备好的状态",
+        "usageScenarios": ["日常", "工作", "出行"],
+        "examples": ["Please get ready for the meeting.", "I need ten minutes to get ready.", "Get ready, we are leaving soon."],
+        "collocation": "get ready + for + something",
+        "antonym": ""
+      },
+      {
+        "phrase": "get better",
+        "zh": "变好",
+        "literalBreakdown": "get(变得) + better(更好) -> 状态变好",
+        "usageScenarios": ["健康", "工作", "进步"],
+        "examples": ["Things will get better.", "I hope you get better soon.", "Her English is getting better."],
+        "collocation": "get better + soon / at something",
+        "antonym": "get worse"
+      }
+    ],
+    "advancedReplacements": [
+      { "advanced": "receive", "simple": "get" },
+      { "advanced": "understand", "simple": "get" },
+      { "advanced": "become tired", "simple": "get tired" }
+    ]
+  },
+  {
+    "word": "make",
+    "coreMeaning": "create, cause, arrange",
+    "zh": "制作、造成、安排",
+    "examples": ["Make it simple.", "This made me happy.", "We made a plan."],
+    "patterns": [
+      {
+        "phrase": "make sure",
+        "zh": "确保",
+        "literalBreakdown": "make(使) + sure(确定) -> 使事情确定",
+        "usageScenarios": ["工作", "检查", "计划"],
+        "examples": ["Make sure it works.", "Make sure you call me.", "Please make sure the door is closed."],
+        "collocation": "make sure + sentence",
+        "antonym": ""
+      },
+      {
+        "phrase": "make a plan",
+        "zh": "制定计划",
+        "literalBreakdown": "make(制作) + plan(计划) -> 做出计划",
+        "usageScenarios": ["工作", "学习", "安排"],
+        "examples": ["Let us make a plan.", "We made a plan for the week.", "Make a plan before you start."],
+        "collocation": "make a plan + for + time/event",
+        "antonym": ""
+      },
+      {
+        "phrase": "make sense",
+        "zh": "有道理",
+        "literalBreakdown": "make(形成) + sense(意义) -> 形成可理解的意义",
+        "usageScenarios": ["解释", "讨论", "判断"],
+        "examples": ["That makes sense.", "Your idea makes sense.", "This sentence does not make sense."],
+        "collocation": "make sense + to + person",
+        "antonym": "make no sense"
+      }
+    ],
+    "advancedReplacements": [
+      { "advanced": "create", "simple": "make" },
+      { "advanced": "ensure", "simple": "make sure" },
+      { "advanced": "reasonable", "simple": "make sense" }
+    ]
+  },
+  {
+    "word": "take",
+    "coreMeaning": "carry, use, accept, need time",
+    "zh": "拿、带走、接受、花费",
+    "examples": ["Take your time.", "Take this with you.", "It takes one hour."],
+    "patterns": [
+      {
+        "phrase": "take care",
+        "zh": "照顾、保重",
+        "literalBreakdown": "take(承担) + care(照顾) -> 承担照顾这件事",
+        "usageScenarios": ["告别", "健康", "责任"],
+        "examples": ["Take care of yourself.", "Please take care of this.", "Take care on the road."],
+        "collocation": "take care + of + person/thing",
+        "antonym": ""
+      },
+      {
+        "phrase": "take time",
+        "zh": "花时间",
+        "literalBreakdown": "take(需要) + time(时间) -> 需要时间",
+        "usageScenarios": ["学习", "工作", "等待"],
+        "examples": ["Learning takes time.", "This will take time.", "Take time to think."],
+        "collocation": "take + amount of time",
+        "antonym": ""
+      },
+      {
+        "phrase": "take part",
+        "zh": "参与",
+        "literalBreakdown": "take(拿取) + part(一部分) -> 成为其中一部分",
+        "usageScenarios": ["活动", "会议", "项目"],
+        "examples": ["I want to take part.", "She took part in the game.", "Can I take part in this project?"],
+        "collocation": "take part + in + activity",
+        "antonym": "stay out"
+      }
+    ],
+    "advancedReplacements": [
+      { "advanced": "require time", "simple": "take time" },
+      { "advanced": "participate", "simple": "take part" },
+      { "advanced": "accept responsibility", "simple": "take care of it" }
+    ]
+  },
+  {
+    "word": "put",
+    "coreMeaning": "place, set, express",
+    "zh": "放置、设置、表达",
+    "examples": ["Put it here.", "Put your name on it.", "Put it another way."],
+    "patterns": [
+      {
+        "phrase": "put on",
+        "zh": "穿上",
+        "literalBreakdown": "put(放) + on(在上面) -> 把衣物放到身上",
+        "usageScenarios": ["穿衣", "出门", "日常"],
+        "examples": ["Put on your coat.", "She put on her shoes.", "Put on a hat before you go out."],
+        "collocation": "put on + clothes",
+        "antonym": "take off"
+      },
+      {
+        "phrase": "put in",
+        "zh": "放入",
+        "literalBreakdown": "put(放) + in(里面) -> 放到里面",
+        "usageScenarios": ["表格", "输入", "整理"],
+        "examples": ["Put in your name.", "Put the card in the box.", "Please put in the right number."],
+        "collocation": "put in + information/object",
+        "antonym": "take out"
+      },
+      {
+        "phrase": "put away",
+        "zh": "收好",
+        "literalBreakdown": "put(放) + away(离开当前位置) -> 放到该放的位置",
+        "usageScenarios": ["整理", "家务", "课堂"],
+        "examples": ["Put away your phone.", "I put away my books.", "Please put the toys away."],
+        "collocation": "put away + object",
+        "antonym": "take out"
+      }
+    ],
+    "advancedReplacements": [
+      { "advanced": "place", "simple": "put" },
+      { "advanced": "insert", "simple": "put in" },
+      { "advanced": "express differently", "simple": "put another way" }
+    ]
+  },
+  {
+    "word": "give",
+    "coreMeaning": "offer, provide, allow",
+    "zh": "给、提供、允许",
+    "examples": ["Give me a minute.", "Give it a try.", "Give them help."],
+    "patterns": [
+      {
+        "phrase": "give up",
+        "zh": "放弃",
+        "literalBreakdown": "give(交出) + up(向上/出去) -> 把坚持交出去",
+        "usageScenarios": ["困难", "学习", "目标"],
+        "examples": ["Do not give up.", "He gave up too soon.", "Never give up on your dream."],
+        "collocation": "give up + on + goal/person",
+        "antonym": "keep going"
+      },
+      {
+        "phrase": "give back",
+        "zh": "归还",
+        "literalBreakdown": "give(给) + back(回去) -> 给回原处",
+        "usageScenarios": ["借还", "物品", "责任"],
+        "examples": ["Give it back.", "I gave the book back.", "Please give back my pen."],
+        "collocation": "give back + object",
+        "antonym": "take"
+      },
+      {
+        "phrase": "give a hand",
+        "zh": "帮忙",
+        "literalBreakdown": "give(给) + a hand(一只手) -> 给出帮助",
+        "usageScenarios": ["工作", "朋友", "家庭"],
+        "examples": ["Can you give me a hand?", "She gave us a hand.", "Give him a hand with the box."],
+        "collocation": "give + person + a hand",
+        "antonym": ""
+      }
+    ],
+    "advancedReplacements": [
+      { "advanced": "provide", "simple": "give" },
+      { "advanced": "attempt", "simple": "give it a try" },
+      { "advanced": "assist", "simple": "give a hand" }
+    ]
+  },
+  {
+    "word": "go",
+    "coreMeaning": "move, continue, happen",
+    "zh": "去、继续、发生",
+    "examples": ["Go with me.", "The meeting went well.", "Go on."],
+    "patterns": [
+      {
+        "phrase": "go on",
+        "zh": "继续",
+        "literalBreakdown": "go(走) + on(继续在上面) -> 继续往前",
+        "usageScenarios": ["谈话", "工作", "故事"],
+        "examples": ["Please go on.", "The show must go on.", "Go on with your work."],
+        "collocation": "go on + with + activity",
+        "antonym": "stop"
+      },
+      {
+        "phrase": "go back",
+        "zh": "回去",
+        "literalBreakdown": "go(走) + back(回) -> 回到之前的位置",
+        "usageScenarios": ["地点", "时间", "步骤"],
+        "examples": ["Go back to the start.", "I went back home.", "Let us go back to the first question."],
+        "collocation": "go back + to + place/topic",
+        "antonym": "go forward"
+      },
+      {
+        "phrase": "go well",
+        "zh": "顺利",
+        "literalBreakdown": "go(进行) + well(好) -> 事情进行得好",
+        "usageScenarios": ["工作", "考试", "会议"],
+        "examples": ["I hope it goes well.", "The meeting went well.", "Everything is going well."],
+        "collocation": "go well + for + person/project",
+        "antonym": "go badly"
+      }
+    ],
+    "advancedReplacements": [
+      { "advanced": "continue", "simple": "go on" },
+      { "advanced": "return", "simple": "go back" },
+      { "advanced": "succeed", "simple": "go well" }
+    ]
+  },
+  {
+    "word": "come",
+    "coreMeaning": "arrive, move near, happen",
+    "zh": "来、到达、发生",
+    "examples": ["Come here.", "The answer came to me.", "Winter is coming."],
+    "patterns": [
+      {
+        "phrase": "come back",
+        "zh": "回来",
+        "literalBreakdown": "come(来) + back(回) -> 回到这里",
+        "usageScenarios": ["地点", "关系", "恢复"],
+        "examples": ["Come back soon.", "She came back yesterday.", "The pain came back."],
+        "collocation": "come back + soon / to + place",
+        "antonym": "go away"
+      },
+      {
+        "phrase": "come in",
+        "zh": "进来",
+        "literalBreakdown": "come(来) + in(里面) -> 来到里面",
+        "usageScenarios": ["房间", "邀请", "到达"],
+        "examples": ["Please come in.", "Come in and sit down.", "The train came in late."],
+        "collocation": "come in + to + place",
+        "antonym": "go out"
+      },
+      {
+        "phrase": "come from",
+        "zh": "来自",
+        "literalBreakdown": "come(来) + from(从) -> 从某处而来",
+        "usageScenarios": ["来源", "家乡", "原因"],
+        "examples": ["Where do you come from?", "This word comes from French.", "The sound came from outside."],
+        "collocation": "come from + place/source",
+        "antonym": ""
+      }
+    ],
+    "advancedReplacements": [
+      { "advanced": "arrive", "simple": "come" },
+      { "advanced": "return", "simple": "come back" },
+      { "advanced": "originate", "simple": "come from" }
+    ]
+  },
+  {
+    "word": "have",
+    "coreMeaning": "own, experience, need to",
+    "zh": "有、经历、必须",
+    "examples": ["I have a question.", "Have a good day.", "I have to go."],
+    "patterns": [
+      {
+        "phrase": "have to",
+        "zh": "必须",
+        "literalBreakdown": "have(拥有) + to(指向动作) -> 有必须做的事",
+        "usageScenarios": ["责任", "规则", "计划"],
+        "examples": ["I have to work.", "You have to wait.", "We have to leave now."],
+        "collocation": "have to + verb",
+        "antonym": "do not have to"
+      },
+      {
+        "phrase": "have a look",
+        "zh": "看一看",
+        "literalBreakdown": "have(进行) + a look(一次看) -> 看一下",
+        "usageScenarios": ["检查", "帮助", "确认"],
+        "examples": ["Have a look at this.", "Can you have a look?", "I had a look at the file."],
+        "collocation": "have a look + at + thing",
+        "antonym": ""
+      },
+      {
+        "phrase": "have trouble",
+        "zh": "遇到困难",
+        "literalBreakdown": "have(有) + trouble(困难) -> 有困难",
+        "usageScenarios": ["学习", "工作", "生活"],
+        "examples": ["I have trouble sleeping.", "She had trouble with the task.", "Do you have trouble understanding it?"],
+        "collocation": "have trouble + doing something",
+        "antonym": "have no trouble"
+      }
+    ],
+    "advancedReplacements": [
+      { "advanced": "possess", "simple": "have" },
+      { "advanced": "must", "simple": "have to" },
+      { "advanced": "inspect", "simple": "have a look" }
+    ]
+  },
+  {
+    "word": "be",
+    "coreMeaning": "exist, identify, describe state",
+    "zh": "是、存在、处于某状态",
+    "examples": ["Be clear.", "It is simple.", "I am ready."],
+    "patterns": [
+      {
+        "phrase": "be ready",
+        "zh": "准备好",
+        "literalBreakdown": "be(处于) + ready(准备好的) -> 处于准备好的状态",
+        "usageScenarios": ["出发", "会议", "学习"],
+        "examples": ["Be ready at nine.", "I am ready now.", "Are you ready for class?"],
+        "collocation": "be ready + for + thing",
+        "antonym": "be not ready"
+      },
+      {
+        "phrase": "be able to",
+        "zh": "能够",
+        "literalBreakdown": "be(处于) + able(有能力) + to(去做) -> 有能力做",
+        "usageScenarios": ["能力", "计划", "承诺"],
+        "examples": ["You will be able to do it.", "I am able to help.", "Will she be able to come?"],
+        "collocation": "be able to + verb",
+        "antonym": "be unable to"
+      },
+      {
+        "phrase": "be about to",
+        "zh": "即将",
+        "literalBreakdown": "be(处于) + about to(接近动作) -> 马上要做",
+        "usageScenarios": ["时间", "通知", "准备"],
+        "examples": ["We are about to start.", "I was about to call you.", "The train is about to leave."],
+        "collocation": "be about to + verb",
+        "antonym": ""
+      }
+    ],
+    "advancedReplacements": [
+      { "advanced": "exist", "simple": "be" },
+      { "advanced": "capable of", "simple": "be able to" },
+      { "advanced": "soon start", "simple": "be about to" }
+    ]
+  },
+  {
+    "word": "do",
+    "coreMeaning": "act, complete, work",
+    "zh": "做、完成、起作用",
+    "examples": ["Do your best.", "Do it now.", "This will do."],
+    "patterns": [
+      {
+        "phrase": "do well",
+        "zh": "做得好",
+        "literalBreakdown": "do(做) + well(好) -> 做得好",
+        "usageScenarios": ["学习", "工作", "表现"],
+        "examples": ["You did well.", "She does well in English.", "The team did well today."],
+        "collocation": "do well + in + subject/activity",
+        "antonym": "do badly"
+      },
+      {
+        "phrase": "do more",
+        "zh": "做更多",
+        "literalBreakdown": "do(做) + more(更多) -> 做更多事情",
+        "usageScenarios": ["目标", "工作", "帮助"],
+        "examples": ["We can do more.", "I want to do more practice.", "Do more with fewer words."],
+        "collocation": "do more + for/about/with",
+        "antonym": "do less"
+      },
+      {
+        "phrase": "do with",
+        "zh": "处理",
+        "literalBreakdown": "do(做) + with(和...一起) -> 对某物采取行动",
+        "usageScenarios": ["问题", "物品", "决定"],
+        "examples": ["What should we do with this?", "I do not know what to do with it.", "Do something with your time."],
+        "collocation": "do with + thing/problem",
+        "antonym": ""
+      }
+    ],
+    "advancedReplacements": [
+      { "advanced": "perform", "simple": "do" },
+      { "advanced": "handle", "simple": "do with" },
+      { "advanced": "succeed", "simple": "do well" }
+    ]
+  }
+]

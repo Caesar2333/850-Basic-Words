@@ -1,0 +1,24 @@
+[
+  {
+    "day": 1,
+    "title": "Start with core action words",
+    "words": ["get", "make", "take", "give", "put", "go", "come", "have", "be", "do"],
+    "practice": [
+      {
+        "type": "fill-blank",
+        "question": "I need to ___ ready for the meeting.",
+        "answer": "get"
+      },
+      {
+        "type": "choice",
+        "question": "Which word can mean receive, become, or understand?",
+        "answer": "get"
+      },
+      {
+        "type": "rewrite",
+        "question": "Rewrite: Please prepare for the meeting.",
+        "answer": "Please get ready for the meeting."
+      }
+    ]
+  }
+]

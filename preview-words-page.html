@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Words Page - Pencil Preview</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #e8ece0; padding: 40px; font-family: system-ui, sans-serif; }
+
+.page {
+  width: 1440px;
+  margin: 0 auto;
+  background: #fbfdf6;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+/* === HEADER === */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 56px;
+  padding: 0 40px;
+  border-bottom: 1px solid #e0e5d5;
+  background: #fbfdf6;
+}
+.logo { font-size: 18px; font-weight: bold; color: #0a1d08; }
+.nav { display: flex; gap: 8px; }
+.nav-pill { padding: 8px 20px; border-radius: 20px; font-size: 14px; border: 1px solid #e0e5d5; color: #0a1d08; background: #fbfdf6; }
+.nav-pill.active { background: #d7e8b5; border-color: #d7e8b5; color: #203b14; font-weight: bold; }
+
+/* === HERO === */
+.hero {
+  display: flex;
+  gap: 32px;
+  padding: 48px 40px;
+  align-items: flex-end;
+}
+.hero-left { flex: 1; display: flex; flex-direction: column; gap: 20px; }
+.hero-label { font-size: 12px; font-weight: bold; color: #203b14; }
+.hero-title { font-size: 53px; font-weight: bold; line-height: 1.05; color: #0a1d08; }
+.hero-sub { font-size: 18px; line-height: 1.43; color: rgba(10,29,8,0.75); }
+.stats {
+  width: 480px;
+  display: flex;
+  border-radius: 8px;
+  border: 1px solid #e0e5d5;
+  background: rgba(215,232,181,0.25);
+  overflow: hidden;
+}
+.stat-item { flex: 1; padding: 20px; }
+.stat-item + .stat-item { border-left: 1px solid #e0e5d5; }
+.stat-label { font-size: 12px; font-weight: bold; color: #203b14; }
+.stat-value { font-size: 30px; font-weight: bold; color: #0a1d08; margin-top: 4px; }
+
+/* === FILTER BAR === */
+.filter-bar {
+  border-top: 1px solid #e0e5d5;
+  border-bottom: 1px solid #e0e5d5;
+  padding: 32px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.filter-row1 { display: flex; gap: 16px; align-items: center; }
+.search-box {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 48px;
+  border: 1px solid #e0e5d5;
+  border-radius: 8px;
+  padding: 0 20px;
+  background: #fbfdf6;
+}
+.search-label { font-size: 12px; font-weight: bold; color: #203b14; }
+.search-placeholder { font-size: 14px; color: rgba(10,29,8,0.45); }
+.sort-group { display: flex; align-items: center; gap: 12px; }
+.sort-label { font-size: 14px; color: rgba(10,29,8,0.75); }
+.sort-box {
+  height: 48px;
+  width: 120px;
+  border: 1px solid #e0e5d5;
+  border-radius: 8px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  background: #fbfdf6;
+  font-size: 14px;
+  font-weight: bold;
+  color: #0a1d08;
+}
+
+.filter-row2 { display: flex; gap: 8px; }
+.cat-pill { display: flex; align-items: center; gap: 8px; padding: 8px 20px; border-radius: 20px; font-size: 14px; }
+.cat-pill.active { background: #203b14; color: #fbfdf6; }
+.cat-pill:not(.active) { background: #fbfdf6; border: 1px solid #e0e5d5; color: #0a1d08; }
+
+.letter-strip {
+  display: flex; gap: 8px;
+  border: 1px solid #e0e5d5; border-radius: 8px; padding: 8px;
+  background: #fbfdf6;
+}
+.letter-pill { padding: 8px 12px; border-radius: 10px; font-size: 14px; }
+.letter-pill.active { background: #d7e8b5; color: #203b14; }
+.letter-pill:not(.active) { background: #fbfdf6; color: #0a1d08; }
+
+/* === CARD SECTION === */
+.card-section { padding: 40px 40px 64px; display: flex; flex-direction: column; gap: 24px; }
+.results-header { display: flex; justify-content: space-between; align-items: center; }
+.results-count { font-size: 14px; color: rgba(10,29,8,0.75); }
+.clear-link { font-size: 14px; font-weight: bold; color: #203b14; }
+
+.card-grid { display: flex; gap: 20px; }
+.card {
+  flex: 1;
+  display: flex; flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  border-radius: 8px;
+  border: 1px solid #c5ccb6;
+  background: #fbfdf6;
+}
+.card-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.card-word { font-size: 30px; font-weight: bold; color: #0a1d08; }
+.card-badge { padding: 4px 12px; border-radius: 20px; background: #d7e8b5; font-size: 12px; color: #203b14; }
+.card-zh { font-size: 14px; color: rgba(10,29,8,0.75); }
+.card-example {
+  border-left: 3px solid #203b14;
+  background: rgba(215,232,181,0.19);
+  border-radius: 4px;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #0a1d08;
+  line-height: 1.43;
+}
+.card-trans { font-size: 13px; color: rgba(10,29,8,0.6); line-height: 1.43; }
+.card-tags { display: flex; gap: 8px; }
+.card-tag { padding: 4px 12px; border-radius: 20px; background: rgba(215,232,181,0.5); font-size: 12px; color: rgba(10,29,8,0.75); }
+
+/* === LOAD MORE === */
+.load-more-wrap { display: flex; flex-direction: column; align-items: center; gap: 12px; padding-top: 24px; }
+.load-more-btn {
+  padding: 16px 48px;
+  border-radius: 20px;
+  background: #4a3212;
+  color: #fbfdf6;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+.load-note { font-size: 14px; color: rgba(10,29,8,0.65); }
+
+/* === FOOTER === */
+.footer {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  padding: 40px;
+  border-top: 1px solid #e0e5d5;
+  background: #fbfdf6;
+}
+.footer-left { display: flex; flex-direction: column; gap: 12px; width: 400px; }
+.footer-right { display: flex; flex-direction: column; gap: 16px; align-items: flex-end; }
+.footer-nav { display: flex; gap: 16px; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo">850 English OS</div>
+    <div class="nav">
+      <div class="nav-pill">Home</div>
+      <div class="nav-pill active">Words</div>
+      <div class="nav-pill">Daily</div>
+      <div class="nav-pill">Patterns</div>
+      <div class="nav-pill">Rewrite</div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-label">850 WORDS</div>
+      <div class="hero-title">850 Basic Words</div>
+      <div class="hero-sub">The core words for building simple English expression.</div>
+    </div>
+    <div class="stats">
+      <div class="stat-item">
+        <div class="stat-label">TOTAL WORDS</div>
+        <div class="stat-value">850</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">CATEGORIES</div>
+        <div class="stat-value">6</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">SHOWING</div>
+        <div class="stat-value">24 / 850</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <div class="filter-row1">
+      <div class="search-box">
+        <span class="search-label">Search</span>
+        <span class="search-placeholder">Search words, Chinese meaning, or phrases...</span>
+      </div>
+      <div class="sort-group">
+        <span class="sort-label">Sort by</span>
+        <div class="sort-box">A → Z</div>
+      </div>
+    </div>
+
+    <div class="filter-row2">
+      <div class="cat-pill active"><span>All</span><span>850</span></div>
+      <div class="cat-pill"><span>Operations</span><span>320</span></div>
+      <div class="cat-pill"><span>Things</span><span>200</span></div>
+      <div class="cat-pill"><span>People</span><span>80</span></div>
+      <div class="cat-pill"><span>Qualities</span><span>150</span></div>
+      <div class="cat-pill"><span>Time & Place</span><span>60</span></div>
+      <div class="cat-pill"><span>Function Words</span><span>40</span></div>
+    </div>
+
+    <div class="letter-strip">
+      <span class="letter-pill active">All</span>
+      <span class="letter-pill">A</span><span class="letter-pill">B</span>
+      <span class="letter-pill">C</span><span class="letter-pill">D</span>
+      <span class="letter-pill">E</span><span class="letter-pill">F</span>
+      <span class="letter-pill">G</span><span class="letter-pill">H</span>
+      <span class="letter-pill">I</span><span class="letter-pill">J</span>
+      <span class="letter-pill">K</span><span class="letter-pill">L</span>
+      <span class="letter-pill">M</span><span class="letter-pill">N</span>
+      <span class="letter-pill">O</span><span class="letter-pill">P</span>
+      <span class="letter-pill">Q</span><span class="letter-pill">R</span>
+      <span class="letter-pill">S</span><span class="letter-pill">T</span>
+      <span class="letter-pill">U</span><span class="letter-pill">V</span>
+      <span class="letter-pill">W</span><span class="letter-pill">X</span>
+      <span class="letter-pill">Y</span><span class="letter-pill">Z</span>
+    </div>
+  </div>
+
+  <!-- CARDS -->
+  <div class="card-section">
+    <div class="results-header">
+      <span class="results-count">Showing 24 of 850 words</span>
+      <span class="clear-link">Clear filters</span>
+    </div>
+
+    <!-- Row 1 -->
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-top">
+          <span class="card-word">get</span>
+          <span class="card-badge">Actions</span>
+        </div>
+        <div class="card-zh">得到、拿到、变得、理解</div>
+        <div class="card-example">I got your message.</div>
+        <div class="card-trans">📖 我收到了你的消息。</div>
+        <div class="card-tags">
+          <span class="card-tag">core</span>
+          <span class="card-tag">high-frequency</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="card-word">make</span>
+          <span class="card-badge">Actions</span>
+        </div>
+        <div class="card-zh">制作、使成为</div>
+        <div class="card-example">Make it simple.</div>
+        <div class="card-trans">📖 让它简单一点。</div>
+        <div class="card-tags">
+          <span class="card-tag">core</span>
+          <span class="card-tag">high-frequency</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="card-word">take</span>
+          <span class="card-badge">Actions</span>
+        </div>
+        <div class="card-zh">拿、带走、需要</div>
+        <div class="card-example">Take your time.</div>
+        <div class="card-trans">📖 慢慢来，不用急。</div>
+        <div class="card-tags">
+          <span class="card-tag">core</span>
+          <span class="card-tag">high-frequency</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-top">
+          <span class="card-word">give</span>
+          <span class="card-badge">Actions</span>
+        </div>
+        <div class="card-zh">给、提供</div>
+        <div class="card-example">Give me a minute.</div>
+        <div class="card-trans">📖 给我一分钟。</div>
+        <div class="card-tags">
+          <span class="card-tag">core</span>
+          <span class="card-tag">high-frequency</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="card-word">put</span>
+          <span class="card-badge">Actions</span>
+        </div>
+        <div class="card-zh">放、放置</div>
+        <div class="card-example">Put it here.</div>
+        <div class="card-trans">📖 放在这里。</div>
+        <div class="card-tags">
+          <span class="card-tag">core</span>
+          <span class="card-tag">high-frequency</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="card-word">go</span>
+          <span class="card-badge">Actions</span>
+        </div>
+        <div class="card-zh">去、进行</div>
+        <div class="card-example">Go with me.</div>
+        <div class="card-trans">📖 跟我一起走。</div>
+        <div class="card-tags">
+          <span class="card-tag">core</span>
+          <span class="card-tag">high-frequency</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Load More -->
+    <div class="load-more-wrap">
+      <button class="load-more-btn">Load more</button>
+      <div class="load-note">Loading fewer cards at a time keeps the page responsive.</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-left">
+      <div style="font-size:16px;font-weight:bold;color:#0a1d08">850 English OS</div>
+      <div style="font-size:14px;color:rgba(10,29,8,0.75)">Learn more with fewer words.</div>
+      <div style="font-size:14px;color:rgba(10,29,8,0.75)">Based on the classic Basic English 850-word concept.</div>
+    </div>
+    <div class="footer-right">
+      <div class="footer-nav">
+        <span style="font-size:14px;color:rgba(10,29,8,0.75)">About</span>
+        <span style="font-size:14px;color:rgba(10,29,8,0.75)">Words</span>
+        <span style="font-size:14px;color:rgba(10,29,8,0.75)">Patterns</span>
+        <span style="font-size:14px;color:rgba(10,29,8,0.75)">Rewrite</span>
+      </div>
+      <div style="font-size:14px;color:rgba(10,29,8,0.65)">© 2026 850 English OS</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

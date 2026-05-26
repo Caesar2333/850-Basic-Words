@@ -1,0 +1,38 @@
+[
+  {
+    "id": "operations",
+    "name": "Operations / Actions",
+    "zh": "动作与操作词",
+    "description": "Words used to describe actions and basic operations."
+  },
+  {
+    "id": "things",
+    "name": "Things",
+    "zh": "事物词",
+    "description": "Words used to describe objects and common things."
+  },
+  {
+    "id": "people",
+    "name": "People",
+    "zh": "人物词",
+    "description": "Words used to talk about people and roles."
+  },
+  {
+    "id": "qualities",
+    "name": "Qualities",
+    "zh": "性质与描述词",
+    "description": "Words used to describe qualities, states, and amounts."
+  },
+  {
+    "id": "time-place",
+    "name": "Time & Place",
+    "zh": "时间与地点词",
+    "description": "Words used for time, place, direction, and position."
+  },
+  {
+    "id": "function-words",
+    "name": "Function Words",
+    "zh": "功能词",
+    "description": "Small grammar words that connect simple English ideas."
+  }
+]
